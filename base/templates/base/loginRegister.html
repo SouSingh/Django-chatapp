@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block content %}
+    {% if page == 'login'%}
+    <div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
+        <div
+            class="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:h-150 flex-1 lg:max-w-screen-md">
+            <div
+                class="p-4 py-6 text-white bg-green-500 md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
+                <div class="my-3 text-4xl font-bold tracking-wider text-center">
+                    <a href=''>Chatting app</a>
+                </div>
+                <p class="mt-6 font-normal text-center text-gray-300 md:mt-0">
+                    Chat in Python Django with multi user
+                </p>
+                <p class="flex flex-col items-center justify-center mt-10 text-center">
+                    <span>Don't have an account?</span>
+                    <a href="{% url 'register_page' %}" class="underline">Get Started!</a>
+                </p>
+            </div>
+            <div class="p-5 bg-white md:flex-1">
+                <h3 class="my-4 text-2xl font-semibold text-gray-700">Account Login</h3>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="flex flex-col space-y-1">
+                        <label class="text-sm font-semibold text-gray-500">Username:</label>
+                        <input
+                            class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                            type="text" name="username" placeholder="Enter Username" />
+                    </div>
+                    <div class="flex flex-col space-y-1">
+                        <label class="flex items-center justify-between">Password:</label>
+                        <input
+                            class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                            type="password" name="password" placeholder="Enter Password" />
+                    </div>
+                    <input type="submit" value="Login"
+                        class="w-full px-4 mt-2 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-green-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
+        <div
+            class="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:h-150 flex-1 lg:max-w-screen-md">
+            <div
+                class="p-4 py-6 border-2 border-green-500 text-green-500 bg-white md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
+                <div class="my-3 text-4xl font-bold tracking-wider text-center">
+                    <a href=''>Chatting app</a>
+                </div>
+                <p class="mt-6 font-normal text-center text-green-500 md:mt-0">
+                    Chat in Python Django with multi user
+                </p>
+            </div>
+            <div class="p-5 bg-green-500 md:flex-1">
+                <h3 class="my-4 text-2xl font-semibold text-gray-700">Account Login</h3>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <table class="text-green p-2">
+                        {{form.as_table}}
+                    </table>
+                    <input class="w-full px-4 mt-2 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-white text-green-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4" type="submit" value="Register" />
+                    <p class="text-lg text-white items-center">Already Account</p>
+                    <a class="text-lg text-white " href="{% url 'login_page' %}">Sign in</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div>
+        <div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
+
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Register" />
+                <p>Already signed up yet</p>
+                <a href="{% url 'login_page' %}">Sign in</a>
+            </form>
+        </div>
+    </div>
+    </div>-->
+    {% endif %}
+
+    {% endblock content %}
+</body>
+
+</html>

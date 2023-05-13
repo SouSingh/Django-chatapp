@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="flex justify-between p-6 bg-green-500 h-screen w-full">
+    <div class="flex-row justify-between">
+        <div class="flex-row">
+            <h1 class="text-5xl text-white">{{room.name}}</h1>
+            <p class="text-xl text-white ">{{room.description}}</p>
+        </div>
+                <!--<hr>
+                {% for message in roommessages %}
+                    <div>
+                        <small>@{{message.user}} {{message.created|timesince}} ago</small>
+                        {% if request.user == message.user %}
+                        <a href="{% url 'Delete_page' message.id %}">
+                            Delete
+                        </a>
+                        {% endif %}
+                        <p>{{message.body}}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+                -->
+                <div class="w-full px-5 flex flex-col justify-between">
+                    <div class="flex flex-col mt-5">
+                        {% for message in roommessages %}
+                      <div class="flex justify-start mb-4">
+                        <small>@{{message.user}} {{message.created|timesince}} ago</small>
+                        <div
+                          class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
+                        >
+                          {{message.body}}
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    <div class="py-5">
+                        <form method="POST" action="">
+                            {% if request.user.is_authenticated %}
+                        {% csrf_token %}
+                      <input
+                        class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+                        type="text"
+                        name="body"
+                        placeholder="type your message here..."
+                      />
+                      {% endif %}
+                    </form>
+                    </div>
+                  </div>
+    </div>
+    <div>
+        <h3>Participants</h3>
+        <hr>
+        {% for user in participants%}
+           <div>
+             <p>@{{user.username}}</p>
+           </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

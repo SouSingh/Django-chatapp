@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="flex justify-center items-center bg-green-500 min-h-screen">
+    <form method="POST" action="">
+      <table>
+        {{form.as_table}}
+      </table>
+      {% csrf_token %}
+      <input type="submit" class="bg-white border px-12 rounded-lg py-2" value="Submit" />
+    </form>
+</div>
+
+{% endblock content %}

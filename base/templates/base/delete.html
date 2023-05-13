@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="flex justify-center items-center pt-6">
+   <form method="POST" action ="">
+      {% csrf_token %}
+      <div class="flex items-center space-x-3">
+         <p class="text-2xl">Are you sure you want to delete </p>
+         <p class="text-xl underline text-green-500 ">{{obj.name}} {{obj.body}} ?</p>
+      </div>
+      <div class="flex justify-between p-4">
+         <a class="text-blue-500 hover:underline" href="{{request.META.HTTP_REFERER}}">Go back</a>
+         <input class="text-white hover:bg-red-700 bg-red-500 px-3 py-1 rounded-lg" type="submit" value="Confirm"/>
+      </div>
+   </form>
+</div>
+
+{% endblock content %}

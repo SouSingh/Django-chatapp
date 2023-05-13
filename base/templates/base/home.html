@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .home_container{
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+           
+        }
+    </style>
+</head>
+
+<body>
+    {% extends 'main.html' %}
+
+    {% block content %}
+    <div class="home_container">
+        
+        <div class="flex-row p-4 items-center justify-center ">
+            <h2 class="text-green-500 flex justify-center items-center text-xl">Browse Topic</h2>
+            <a class="flex p-1 pt-3 justify-center underline hover:text-green-500 items-center"  href="{% url 'Home' %}">All</a>
+            {% for topic in topics %}
+            <a class="flex justify-center items-center" href="{% url 'Home' %}?q={{topic.name}}">
+                <h4 class="text-lg p-1 items-center underline hover:text-green-500 ">{{topic.name}}</h4>
+            </a>
+            {% endfor %}
+        </div>
+        <div>
+            <div class="flex justify-between p-5">
+                <div class="text-xl flex p-2 items-center gap-2  text-white rounded-xl ">
+                    <a class="bg-green-500 rounded-xl px-2 py-1" href="{% url 'create_room' %}">Create Room</a>
+                    <a   class="text-xl bg-green-500 px-2 py-1 text-white rounded-xl " href="{% url 'Createttopic' %}">
+                        <h2>Create Topic</h2>
+                    </a>
+                </div>
+                <div class="text-green-500 underline ">
+                    <h5>{{room_count}} Rooms Available</h5>
+                </div>
+            </div>
+            <hr>
+            <div>
+                {%for room in rooms %}
+                <div class="flex justify-between">
+                    <div>
+                        <div>
+                             <h5 class="text-xl hover:text-green-500 font-bold p-2"> <a href="{% url 'room' room.id %}"> {{room.name}}</a></h5>
+                         </div>
+                        <div class="flex gap-2 items-center">
+                            <span class="text-green-500 text-sm">@{{room.host.username}}</span>
+                            <small class="text-xs text-gray-600 ">{{room.topic.name}}</small>
+                        </div>
+                    </div>               
+                    <div class="flex justify-between px-3 space-x-3 items-center">
+                        {% if request.user == room.host %}
+                        <div class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded-lg">
+                            <a href="{% url 'update_room' room.id %}">Edit</a>
+                        </div>
+                        <div class="bg-red-500 text-white hover:bg-red-700 px-4 py-1 rounded-lg">
+                            <a href="{% url 'delete_room' room.id %}">Delete</a><br />
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="bg-green-500 h-screen flex-row items-center justify-between ">
+            <div class="text-2xl flex justify-center pt-3 text-white items-center">
+                <h3>Recent Activties</h3>
+            </div>
+              {% for messgae in room_message %}
+              <div class="flex justify-between bg-white m-3 rounded-lg p-1">
+                  <div class="flex-row space-y-1 ">
+                      <small class="text-xs text-green-500">Replied to "{{messgae.room}}"</small>
+                      <p class="text-green-600 font-bold">{{messgae.body}}</p>
+                  </div>
+                <div>
+                    <div class="flex justify-end">
+                        <small class="text-sm font-large text-blue-500" >@{{messgae.user}}</small>
+                    </div>
+                    <div class="text-xs ">
+                        <h4>{{messgae.created|timesince}}</h4>
+                    </div>
+                    <div>
+                        {% if request.user == messgae.user %}
+                            <a class="flex justify-end bg-red-500 border px-2 py-1 text-white align-middle rounded-xl "  href="{% url 'Delete_page' messgae.id %}">
+                                Delete
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+              {% endfor %}
+        </div>
+    </div>
+
+    {% endblock content %}
+</body>
+
+</html>

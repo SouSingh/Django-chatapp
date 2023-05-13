@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python chat app</title>
+</head>
+<body>
+    <div class="flex justify-between p-3 bg-green-500">
+    <div class=" text-3xl">
+        <a href="/">
+            <h1 class="text-white font-bold italic">P Chat</h1>
+        </a>
+    </div>
+    <div class="flex justify-between gap-2">
+        <div class="border  items-center flex justify-between rounded-2xl ">
+            <form method="GET" action="{% url 'Home' %}">
+                <input  class=" px-2 py-3 rounded-2xl" type="text" name="q" placeholder="Search...."/>
+             </form>
+        </div>
+        <div class=" justify-between items-center">
+            {% if request.user.is_authenticated %}
+            <p class="text-white text-lg p-1">Hello {{request.user}}</p>
+            <a class="text-green-500 text-sm p-1 justify-between border bg-white px-2 py-1 rounded-2xl hover:text-white hover:bg-green-500 " href="{% url 'logout_fun' %}">Logout</a>
+            {% else %}
+            <a class="text-green-500 p-1 text-sm justify-between border bg-white px-2 py-1 rounded-2xl hover:text-white hover:bg-green-500 " href="{% url 'login_page' %}">Login</a>
+            {% endif %}
+        </div>
+         
+    </div>
+    </div>
+    <hr>
+</body>
+</html>
+
